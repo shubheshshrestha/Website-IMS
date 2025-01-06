@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet, GenericViewSet #Generic:Most Logics written by ourselves
-from .models import ProductType, Product, Purchase
-from .serializers import ProductTypeSerializer, ProductSerializer, PurchaseSerializer
+from .models import ProductType, Product, Purchase, Vendor, Sell, Department
+from .serializers import ProductTypeSerializer, ProductSerializer, PurchaseSerializer, VendorSerializer, SellSerializer, DepartmentSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -38,7 +38,64 @@ class PurchaseView(GenericViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def create(self, request):
-        pass
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class VendorView(GenericViewSet):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+
+    def list(self, request):
+        product_objs = self.get_queryset()
+        serializer = self.get_serializer(product_objs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class SellView(GenericViewSet):
+    queryset = Sell.objects.all()
+    serializer_class = SellSerializer
+
+    def list(self, request):
+        product_objs = self.get_queryset()
+        serializer = self.get_serializer(product_objs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DepartmentView(GenericViewSet):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+
+    def list(self, request):
+        product_objs = self.get_queryset()
+        serializer = self.get_serializer(product_objs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
 
 
