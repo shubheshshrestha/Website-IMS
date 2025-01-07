@@ -28,6 +28,31 @@ class ProductView(GenericViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) #Important: status (for frontend devs)
         
+    def retrieve(self,request,pk):
+        # try:    
+        #     product_obj = Product.objects.get(id=pk)
+        # except:
+        #     return Response("Data not found", status=status.HTTP_404_NOT_FOUND)
+        product_obj = self.get_object() 
+        serializer = self.get_serializer(product_obj)
+        return Response(serializer.data)
+    
+    def update(self,request,pk):
+        product_obj = self.get_object()
+        serializer = self.get_serializer(product_obj, data=request.data) # update object through serializer 
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+        
+    def destroy(self,request,pk):
+        product_obj = self.get_object()
+        product_obj.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+        
 class PurchaseView(GenericViewSet):
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer

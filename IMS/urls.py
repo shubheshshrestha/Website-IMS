@@ -21,6 +21,7 @@ from base.views import ProductTypeView, ProductView, PurchaseView, VendorView, S
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('product/', ProductView.as_view({'get': 'list', 'post': 'create'})),
+    path('product/<int:pk>/', ProductView.as_view({'get':'retrieve', 'put':'update','delete':'destroy'})),
     path('product-type/', ProductTypeView.as_view({'get': 'list', 'post': 'create'})),
     path('product-type/<int:pk>/', ProductTypeView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy', 'patch': 'partial_update'
     })),
