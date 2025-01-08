@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'base',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken'    # we have to define authtoken to run token logic 
 ]
 
 MIDDLEWARE = [
