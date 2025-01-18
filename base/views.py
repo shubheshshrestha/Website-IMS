@@ -86,10 +86,9 @@ class RegisterView(GenericViewSet):
 # def login_view(request):
 
 class LoginView(GenericViewSet):
+    queryset = User.objects.all()
+    permission_classes = []
 
-    def create(self,request):
-        queryset = User.objects.all()
-        permission_classes = []
     def create(self,request):
             username = request.data.get("username")
             password = request.data.get("password")
